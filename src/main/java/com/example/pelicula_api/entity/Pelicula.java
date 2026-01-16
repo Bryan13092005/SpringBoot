@@ -1,9 +1,11 @@
 package com.example.pelicula_api.entity;
 
 import jakarta.persistence.*;
+//import lombok.Data;
 import jakarta.validation.constraints.*;
 
 @Entity
+//@Data
 public class Pelicula {
 
     @Id

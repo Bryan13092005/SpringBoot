@@ -11,21 +11,25 @@ import java.util.List;
 
         private final PeliculaRepository peliculaRepository;
 
-        public PeliculaService(PeliculaRepository peliculaRepository) {
+        public PeliculaService(PeliculaRepository peliculaRepository) throw new RecursoNoEncontradoException("Película no encontrada");
+{
             this.peliculaRepository = peliculaRepository;
         }
-        public Pelicula buscarPorId(Long id) {
+        public Pelicula buscarPorId(Long id) throw new RecursoNoEncontradoException("Película no encontrada");
+{
             return peliculaRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Película no encontrada"));
         }
 
-        public void eliminar(Long id) {
+        public void eliminar(Long id) throw new RecursoNoEncontradoException("Película no encontrada");
+{
             if (!peliculaRepository.existsById(id)) {
                 throw new RuntimeException("No existe la película");
             }
             peliculaRepository.deleteById(id);
         }
-        public Pelicula guardar(Pelicula pelicula) {
+        public Pelicula guardar(Pelicula pelicula) throw new RecursoNoEncontradoException("Película no encontrada");
+{
 
             if (pelicula.getAnioEstreno() != null && pelicula.getAnioEstreno() > 2026) {
                 throw new IllegalArgumentException("El año de estreno no puede ser futuro");
@@ -40,9 +44,24 @@ import java.util.List;
 
 
 
-        public List<Pelicula> listar() {
+        public List<Pelicula> listar() throw new RecursoNoEncontradoException("Película no encontrada");
+{
             return peliculaRepository.findAll();
         }
+
+        public Pelicula actualizar(Long id, Pelicula pelicula) throw new RecursoNoEncontradoException("Película no encontrada");
+{
+        Pelicula existente = buscarPorId(id);
+
+            existente.setTitulo(pelicula.getTitulo());
+            existente.setGenero(pelicula.getGenero());
+            existente.setDuracion(pelicula.getDuracion());
+            existente.setAnioEstreno(pelicula.getAnioEstreno());
+            existente.setDisponible(pelicula.isDisponible());
+
+            return peliculaRepository.save(existente);
+    }
+
     }
 
 

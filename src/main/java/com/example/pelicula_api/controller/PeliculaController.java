@@ -42,4 +42,10 @@ public class PeliculaController {
         peliculaService.eliminar(id);
     }
 
+    @PutMapping("/{id}")
+    public Pelicula actualizar(@PathVariable Long id, @Valid @RequestBody Pelicula pelicula) {
+    return peliculaService.actualizar(id, pelicula);
+}
+
+
 }
